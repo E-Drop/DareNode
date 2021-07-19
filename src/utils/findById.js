@@ -1,3 +1,3 @@
-export const findById = (list, id) => {
-    return list.find(listItem => listItem.id === id);
+export const findById = (list, searchedID, id) => {
+    return list.find(listItem => listItem[searchedID] === id);
 };

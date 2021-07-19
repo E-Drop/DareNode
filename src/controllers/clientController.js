@@ -3,7 +3,7 @@ import {
   populatePoliciesOnClient,
   populatePoliciesOnClients,
   filterClientsByName,
-} from "../utils/clientUtils.js";
+} from "../utils/clientsUtils.js";
 import { findById } from "../utils/findById.js";
 import errorsDispatcher from "../utils/errorsDispatcher.js";
 
@@ -15,7 +15,6 @@ export const getClients = (req, res) => {
 
   let clientsList;
 
-  console.log('ASDASDASDASD', policies, clients);
   if (user.role === "user") {
     clientsList = [
       populatePoliciesOnClient(
@@ -29,7 +28,7 @@ export const getClients = (req, res) => {
       : populatePoliciesOnClients(clients, policies);
   }
 
-  if (clientsList.length < limit) {
+  if (clientsList.length < rowsPerPage) {
     return res.send(clientsList);
   }
 
@@ -39,7 +38,7 @@ export const getClients = (req, res) => {
 export const getClientById = (req, res) => {
   const { id } = req.params;
   const { user, clients, policies } = req;
-  const client = findById(clients, id);
+  const client = findById(clients, "id", id);
   if (client) {
     if (id === user.id || user.role === "admin") {
       return res.send(populatePoliciesOnClient(user, policies));
