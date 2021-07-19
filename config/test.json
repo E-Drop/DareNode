@@ -1,0 +1,8 @@
+{
+  "DARE_ID": "dare",
+  "DARE_SECRET": "s3cr3t",
+  "API_BASE_URI": "https://dare-nodejs-assessment.herokuapp.com/api/",
+  "PORT": 3000,
+  "SECRET_KEY": "MiddlewareSecret",
+  "SECRET_SESSION": "SessionSecret"
+}

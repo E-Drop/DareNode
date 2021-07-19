@@ -1,26 +1,36 @@
 {
-  "name": "darenode",
-  "version": "1.0.0",
-  "private": "true",
-  "description": "Dare node Middleware api",
-  "scripts": {
-    "dev": "nodemon --exec npx babel-node src/app.js"
-  },
-  "type": "module",
-  "author": "Edgar Rosendo",
-  "license": "ISC",
-  "dependencies": {
-    "@babel/cli": "^7.13.16",
-    "@babel/core": "^7.14.0",
-    "@babel/node": "^7.13.13",
-    "@babel/plugin-transform-runtime": "^7.13.15",
-    "@babel/preset-env": "^7.14.0",
-    "@babel/runtime": "^7.14.0",
-    "axios": "^0.21.1",
-    "config": "^3.3.6",
-    "express": "^4.17.1",
-    "express-session": "^1.17.2",
-    "jsonwebtoken": "8.5.1",
-    "node-cache": "^5.1.2"
-  }
+    "name": "darenode",
+    "version": "1.0.0",
+    "private": "true",
+    "description": "Dare node Middleware api",
+    "scripts": {
+        "dev": "nodemon --exec npx babel-node src/app.js",
+        "test": "jest __test__"
+    },
+    "author": "Edgar Rosendo",
+    "license": "ISC",
+    "devDependencies": {
+        "babel-eslint": "^10.1.0",
+        "eslint": "^7.25.0",
+        "jest": "26.6.3",
+        "nodemon": "^2.0.7",
+        "supertest": "6.1.3"
+    },
+    "dependencies": {
+        "@babel/cli": "^7.13.16",
+        "@babel/core": "^7.14.0",
+        "@babel/node": "^7.13.13",
+        "@babel/plugin-transform-runtime": "^7.13.15",
+        "@babel/preset-env": "^7.14.0",
+        "@babel/runtime": "^7.14.0",
+        "axios": "^0.21.1",
+        "config": "^3.3.6",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "jsonwebtoken": "8.5.1",
+        "node-cache": "^5.1.2"
+    },
+    "jest": {
+        "testEnvironment": "node"
+    }
 }
