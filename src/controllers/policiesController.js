@@ -12,19 +12,19 @@ export const getPoliciesList = (req, res) => {
   const { limit = null, page = null } = req.query;
   const rowsPerPage = limit ? +limit : 10;
   const currentPage = page ? +page : 1;
-  const isAdmin = role === 'admin';
+  const isAdmin = role === "admin";
 
-  if (!policies) {
-    return errorsDispatcher(res, "NOT_FOUND");
+  if (policies) {
+    const policiesList = policiesWithoutClientId(
+      isAdmin ? policies : findById(policies, "clientId", id)
+    );
+    if (policiesList.length < rowsPerPage) {
+      return res.send(policiesList);
+    }
+
+    return res.send(pagination(rowsPerPage, currentPage, policiesList));
   }
-
-  const policiesList = policiesWithoutClientId(isAdmin ? policies : findById(policies, "clientId", id))
-  
-  if (policiesList.length < rowsPerPage) {
-    return res.send(policiesList);
-  }
-
-  return res.send(pagination(rowsPerPage, currentPage, policiesList));
+  return errorsDispatcher(res, "NOT_FOUND");
 };
 
 export const getPolicyById = (req, res) => {
