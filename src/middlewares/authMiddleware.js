@@ -15,7 +15,17 @@ const authMiddleware = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
-    errorsDispatcher(res, "BAD_REQUEST");
+    if (err.name === 'TokenExpiredError') {
+      const { logedUser } = req.session;
+      const token = jwt.sign(logedUser, config.get('SECRET_KEY'), {
+        expiresIn: TOKEN.EXPIRES_IN
+      });
+      const decoded = jwt.verify(token, config.get('SECRET_KEY'));
+      req.user = decoded;
+      next();
+    } else {
+      errorsDispatcher(res, "BAD_REQUEST");
+    }
   }
 };
 

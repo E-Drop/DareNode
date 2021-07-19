@@ -12,8 +12,16 @@ import policiesRouter from './routes/policiesRouter.js';
 
 import errorsDispatcher from './utils/errorsDispatcher.js';
 
+import session from 'express-session';
+
 const app = express();
 const port = config.get('PORT');
+
+app.use(session({
+  secret: config.get('SECRET_SESSION'),
+  resave: true,
+  saveUninitialized: true
+}));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

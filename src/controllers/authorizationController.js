@@ -19,7 +19,7 @@ const authorizationController = (req, res) => {
     const token = jwt.sign(logedUser, config.get('SECRET_KEY'), {
       expiresIn: 900
     });
-
+    req.session.logedUser = logedUser;
     return res.send({ token, type: 'Bearer', expires_in: 900 });
   }
   return errorsDispatcher(res, 'UNAUTHORIZED');
