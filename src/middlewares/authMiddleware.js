@@ -15,12 +15,12 @@ const authMiddleware = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
-    if (err.name === 'TokenExpiredError') {
+    if (err.name === "TokenExpiredError") {
       const { logedUser } = req.session;
-      const token = jwt.sign(logedUser, config.get('SECRET_KEY'), {
-        expiresIn: TOKEN.EXPIRES_IN
+      const token = jwt.sign(logedUser, config.get("SECRET_KEY"), {
+        expiresIn: 900,
       });
-      const decoded = jwt.verify(token, config.get('SECRET_KEY'));
+      const decoded = jwt.verify(token, config.get("SECRET_KEY"));
       req.user = decoded;
       next();
     } else {

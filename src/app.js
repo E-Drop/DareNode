@@ -1,6 +1,7 @@
 import express from 'express';
 import config from 'config';
 import bodyParser from 'body-parser';
+import NodeCache from 'node-cache';
 
 import ensureLoginDataMiddleware from './middlewares/ensureLoginDataMiddleware.js';
 import retrieveDataMiddleware from './middlewares/retrieveDataMiddleware.js';
@@ -16,6 +17,7 @@ import session from 'express-session';
 
 const app = express();
 const port = config.get('PORT');
+const dataCache = new NodeCache();
 
 app.use(session({
   secret: config.get('SECRET_SESSION'),
@@ -26,9 +28,9 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/login', ensureLoginDataMiddleware, retrieveDataMiddleware('clients'), authorizationRouter());
-app.use('/clients', authMiddleware, retrieveDataMiddleware('clients', 'policies'), clientsRouter());
-app.use('/policies', authMiddleware, retrieveDataMiddleware('policies'), policiesRouter());
+app.use('/login', ensureLoginDataMiddleware, retrieveDataMiddleware(dataCache, 'clients'), authorizationRouter());
+app.use('/clients', authMiddleware, retrieveDataMiddleware(dataCache, 'clients', 'policies'), clientsRouter());
+app.use('/policies', authMiddleware, retrieveDataMiddleware(dataCache, 'policies'), policiesRouter());
 
 app.use((req, res) => {
   errorsDispatcher(res, 'BAD_REQUEST');
